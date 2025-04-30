@@ -3,31 +3,29 @@ package rama.coderhouse.real.state.project.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Data
-@Entity
-@Table(name = "INVOICE_DETAILS")
+package com.project.realstate.entities;
 
-public class InvoiceDetail {
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Table(name = "invoice_details")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class InvoiceDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int invoiceDetailId;
+    private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "INVOICE_ID", nullable = false)
+    private String descripcion;
+    private Double monto;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "invoice_id") // nombre de la columna que va en la tabla invoice_details
     private Invoice invoice;
-
-    @ManyToOne
-    @JoinColumn(name = "PRODUCT_ID", nullable = false)
-    private Product product;
-
-    @Column(name = "AMOUNT", nullable = false)
-    private int amount;
-
-    private class Invoice {
-    }
-
-    @Column(name = "PRICE", nullable = false)
-    private  double price;
 }
+
 

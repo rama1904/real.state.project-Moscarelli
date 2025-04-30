@@ -1,23 +1,33 @@
 package rama.coderhouse.real.state.project.entities;
 
 
+package com.project.realstate.entities;
+
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
-@Table(name = "invoice")
-public class invoice {
+@Table(name = "invoices")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Invoice {
 
-    @id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    @Column(name = "STREET_NAME", nullable = false)
-    private String streetName;
-    @Column(name = "CITY", nullable = false)
-    private String city;
-    @Column(name = "number", nullable = false)
-    private int number;
-    @ManyToOne(fetch = FetchType.LAZY)
-    private client client;
+    private Long id;
+
+    private Double amount;
+    private String description;
+
+    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<InvoiceDetails> detalles = new ArrayList<>();
+
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
+}
+
 
 
 }

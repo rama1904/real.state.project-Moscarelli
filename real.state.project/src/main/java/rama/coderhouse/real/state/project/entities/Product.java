@@ -3,34 +3,44 @@ package rama.coderhouse.real.state.project.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Data
+package com.realstate.moscarelli.entities;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.math.BigDecimal;
+import java.util.List;
+
 @Entity
-@Table(name = "product")
+@Table(name = "products")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    @Column(name = "name", nullable = false)
-    private String name;
+    private Long id;
 
-    @Column(name = "description", nullable = false)
-    private double price;
+    @Column(nullable = false)
+    private String nombre;
 
-    @Column(name = "stock", nullable = false)
-    private int stock;
+    @Column(nullable = false)
+    private BigDecimal precio;
 
-    @ManyToMany
-    @JoinTable(
-            name = "Invoice_details",
-            joinColumns = @JoinColumn(name = "invoice_id")
-            , inverseJoinColumns = @JoinColumn(name = "Client_id")
-    )
-
-
-
-
-
-
-
+    // Relación con detalles de factura
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<InvoiceDetails> detallesFactura;
 }
+
+
+
+
+
+
+
+
+
+
 

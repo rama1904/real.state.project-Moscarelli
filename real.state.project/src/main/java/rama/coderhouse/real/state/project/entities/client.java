@@ -1,33 +1,29 @@
 package rama.coderhouse.real.state.project.entities;
 
+package com.project.realstate.entities;
+
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 
-@Data
 @Entity
-@Table (name = "client")
-public class client {
+@Table(name = "clientes")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-@Column(name = "name", nullable = false)
-    private String name;
+    private String nombre;
+    private String apellido;
+    private String email;
 
-@Column(name = "lastname", nullable = false)
-    private String lastname;
-
-@Column (name = "dni", nullable = false, unique = true)
-    private String dni;
-
-@ManyToMany (mappedBy = "clients",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<invoice> invoices;
-
-<fetch, cascade, mappedBy> OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<invoice_details> invoice_details;
-@ManyToMany (mappedBy = "clients")
-
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Invoice> invoices;
 }
+
